@@ -10,7 +10,6 @@ def create_db_connection(host_name, user_name, user_password, db):
             passwd=user_password,
             database=db
         )
-        print("MySQL Database connection successful \n")
     except Error as err:
         print(f"Error: '{err}'")
 
@@ -34,3 +33,34 @@ def show_db_query(connection, query):
             print(db)
     except Error as e:
         print(f"Error: '{e}'")
+
+
+def execute_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        connection.commit()
+        print("Query Successful")
+    except Error as e:
+        print(f"Error: '{e}'")
+
+
+def execute_many_queries(connection, query, data):
+    cursor = connection.cursor()
+    try:
+        cursor.executemany(query, data)
+        connection.commit()
+        print("Query Successful")
+    except Error as e:
+        print(f"Error: '{e}'")
+
+
+def read_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+    except Error as err:
+        print(f"Error: '{err}'")
