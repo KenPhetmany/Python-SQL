@@ -55,6 +55,17 @@ def execute_many_queries(connection, query, data):
         print(f"Error: '{e}'")
 
 
+def execute_modify_rating(connection, query, val_tuple):
+    cursor = connection.cursor()
+    try:
+        for result in cursor.execute(query, val_tuple, multi=True):
+            if result.with_rows:
+                print(result.fetchall())
+        connection.commit()
+    except Error as e:
+        print(f"Error: '{e}'")
+
+
 def read_query(connection, query):
     cursor = connection.cursor()
     try:
